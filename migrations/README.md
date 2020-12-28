@@ -12,7 +12,7 @@ It's a migration manager package for web projects based on **php** and **mysql**
 
 3. Once your collaborator pulled your changes (s)he also has to run the script to apply the migrations.
 
-4. If you want to roll back all migrations, you can use the **reset.sh** or **reset.bat** script to delete all added files or mysql databases.
+4. If you want to roll back all migrations, you can use the **reset.sh** or **reset.bat** script to delete all added files and mysql databases.
 
 ## config.php
 
@@ -21,7 +21,7 @@ It's the global config file located in the same folder as the migrate and reset 
 Three config entries (php constants) will be automatically added to your conig file when you first run the migrate script. These are:
 
 - **MYSQL_HOST** - the host of your mysql server
-- **MYSQL_USER** - the user which will be used when logging int to the database server
+- **MYSQL_USER** - the user which will be used when logging in to the database server
 - **MYSQL_PASSWORD** - the mysql user's password
 
 You can use them anywhere in the project, just import the config file.
@@ -32,4 +32,4 @@ If you want to create and use multiple branches in your project, make sure you f
 
 - before you merge, rewrite your migration files to be **alphabetically after** the migrations already existing on the main branch
 
-- if the main branch contains unapplied migrations, run the **reset script** after you merged your branch, then **apply the migrations again** (migrate script)
+- if the main branch contains unapplied migrations, run the **reset script** after you merged your branch, then **apply the migrations again**
