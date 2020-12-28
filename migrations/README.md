@@ -1,4 +1,4 @@
-# [Migration Manager tools by](https://github.com/tamas646/mm-tools) [*tamas646*](https://ptamas.hu/)
+# [Migration Manager tools](https://github.com/tamas646/mm-tools) by [*tamas646*](https://ptamas.hu/)
 
 ## What is it?
 
