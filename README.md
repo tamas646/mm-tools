@@ -16,7 +16,7 @@ It's a migration manager package for web projects based on **php** and **mysql**
 2. Check the **regex pattern** which identifies the databases for your project to make sure the script will find and manage only the corresponding databases!
 It can be found at the begining of **4 files**: *migrate.sh*, *migrate.ps1*, *reset.sh* and *reset.ps1*. You have to change the pattern in all files.
 The default pattern identifies all databases except: ***mysql***, ***sys***, ***information_schema***, ***performance_schema*** and ***phpmyadmin***.
-It is highly recommended to change this pattern to filter **only** the databases used by this project.
+It is highly recommended to change this pattern to filter **only** the databases used by your project.
 
 3. Check out the ["how to use"](migrations/README.md) section
 
