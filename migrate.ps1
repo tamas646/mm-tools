@@ -191,7 +191,7 @@ for($i = 0; $i -lt $PHPFILES.Length; ++$i)
         echo ""
         Write-Host "Running update '$($PHPFILES[$i].Name)'..." -f 'darkblue'
         [console]::ForegroundColor = 'white'
-        php -r "if(!(include '$($MM_DIR)/.mm_functions.php') || !(include 'config.php') || !(include '$($MM_DIR)/$($PHPFILES[$i].Name)')) exit(1);"
+        php -r "require '$($MM_DIR)/.mm_functions.php'; require 'config.php'; require '$($MM_DIR)/$($PHPFILES[$i].Name)';"
         if($LastExitCode -ne 0)
         {
             [console]::ForegroundColor = 'blue'

@@ -201,7 +201,7 @@ do
 		echo -e "\e[1mRunning update '${PHPFILES[$i]}'...\e[22m"
 		echo -n -e "\e[97m"
 		set +e
-		php -r "if(!(include '${MM_DIR}/.mm_functions.php') || !(include 'config.php') || !(include '${MM_DIR}/${PHPFILES[$i]}')) exit(1);"
+		php -r "require '${MM_DIR}/.mm_functions.php'; require 'config.php'; require '${MM_DIR}/${PHPFILES[$i]}';"
 		exitcode="$?"
 		set -e
 		echo -n -e "\e[34m"
