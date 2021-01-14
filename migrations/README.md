@@ -33,3 +33,9 @@ If you want to create and use multiple branches in your project, make sure you f
 - before you merge, rewrite your migration files to be **alphabetically after** the migrations already existing on the main branch
 
 - if the main branch contains unapplied migrations, run the **reset script** after you merged your branch, then **apply the migrations again**
+
+## Testing and debugging migrations
+
+You can test the result of your migration before permanently applying it.
+
+For this you have to run the migrate script in testing mode: `migrate.sh -t` or `migrate.bat /t`
