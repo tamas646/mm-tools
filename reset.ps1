@@ -41,15 +41,16 @@ foreach($filename in Get-ChildItem -Path "$($PSScriptRoot)/" -Filter ".gitignore
     }
     foreach($line in Get-Content "$($filename.FullName)")
     {
+        $line = $line.Trim()
         if($line -ne "")
         {
-            if(Test-Path -Path "$($filename.FullName)/$($line)" -PathType Container)
+            if(Test-Path -Path "$($filename.Directory)/$($line)" -PathType Container)
             {
-                rm -r -fo "$($filename.FullName)/$($line)"
+                rm -r -fo "$($filename.Directory)/$($line)"
             }
-            elseif(Test-Path -Path "$($filename.FullName)/$($line)" -PathType Leaf)
+            elseif(Test-Path -Path "$($filename.Directory)/$($line)" -PathType Leaf)
             {
-                rm -fo "$($filename.FullName)/$($line)"
+                rm -fo "$($filename.Directory)/$($line)"
             }
         }
     }

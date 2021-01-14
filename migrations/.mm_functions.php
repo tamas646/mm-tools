@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 function mm_error_handler($errno, $errstr, $errfile, $errline)
 {
 	echo 'PHP Fatal error: '.$errstr.' in '.$errfile.' on line '.$errline.PHP_EOL;
+	debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 	exit(55);
 }
 set_error_handler('mm_error_handler');
@@ -65,6 +66,25 @@ function mm_read_password($prompt = '')
 	return $output[0];
 }
 
+function mm_multi_query(&$conn, $sql, $return = false)
+{
+	if(!$return)
+	{
+		$conn->multi_query($sql);
+		while($conn->more_results())
+			if(!$conn->next_result())
+				trigger_error('Error in SQL multi query: '.$conn->error, E_USER_ERROR);
+	}
+	else
+	{
+		$conn->multi_query($sql);
+		$result = [];
+		do $result[] = $conn->store_result();
+		while($conn->more_results() && ($conn->next_result() || trigger_error('Error in SQL multi query: '.$conn->error, E_USER_ERROR)));
+		return $result;
+	}
+}
+
 function mm_rename($path, $dest)
 {
 	if(!rename($path, $dest))
@@ -73,12 +93,43 @@ function mm_rename($path, $dest)
 	}
 }
 
-function mm_copy($path, $dest)
+function mm_copy($path, $dest, $recurse = false)
 {
-	if(!copy($path, $dest))
+	if(!$recurse)
 	{
-		trigger_error('Cannot copy \''.$path.'\' to \''.$dest.'\'', E_USER_ERROR);
+		if(!copy($path, $dest))
+		{
+			trigger_error('Cannot copy \''.$path.'\' to \''.$dest.'\'', E_USER_ERROR);
+		}
+		return;
 	}
+
+	$dir = opendir($path);
+	if(!file_exists($dest))
+	{
+		if(!mkdir($dest))
+		{
+			trigger_error('Cannot create directory \''.$dest.'\'', E_USER_ERROR);
+		}
+	}
+	while($file = readdir($dir))
+	{
+		if($file != '.' && $file != '..')
+		{
+			if(is_dir($path.'/'.$file))
+			{
+				mm_copy($path.'/'.$file, $dest.'/'.$file, true);
+			}
+			else
+			{
+				if(!copy($path.'/'.$file, $dest.'/'.$file))
+				{
+					trigger_error('Cannot copy \''.$path.'/'.$file.'\' to \''.$dest.'/'.$file.'\'', E_USER_ERROR);
+				}
+			}
+		}
+	}
+	closedir($dir);
 }
 
 function mm_mkdir($path)

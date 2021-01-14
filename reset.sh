@@ -7,6 +7,16 @@ trap reset_colors EXIT
 MM_DIR="`dirname "$0"`/migrations/"
 MM_DBPTN='^(?!mysql$|sys$|information_schema$|performance_schema$|phpmyadmin$)'
 
+if [[ "$OSTYPE" == "msys" ]]
+then
+	reset_colors
+	echo "This script is not capable of running perfectly on Windows."
+	echo -e "Please run \e[1mreset.bat\e[22m or \e[1mreset.ps1\e[22m instead."
+	echo ""
+	echo -n "Press any key to continue..." ; read
+	exit 100
+fi
+
 echo "Are you sure you want to reset your repository?"
 echo -ne "This will delete all data including gitignored files! \e[1m[y/N] "
 read answer
@@ -37,6 +47,7 @@ do
 	fi
 	while read -r line
 	do
+		line="$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 		if [[ "$line" != "" ]]
 		then
 			if [[ -d "`dirname "$filename"`/${line}" ]]

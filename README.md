@@ -27,3 +27,5 @@ This tool is published under the [GNU General Public License v3.0](LICENSE)
 Use at your own risk!
 
 If you find any problem, [check out the issue tickets](https://github.com/tamas646/mm-tools/issues) or [create one](https://github.com/tamas646/mm-tools/issues/new).
+
+The base of the mysql backup creation code: [myphp-backup](https://github.com/daniloaz/myphp-backup) by [daniloaz](https://github.com/daniloaz)
