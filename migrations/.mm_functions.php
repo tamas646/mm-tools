@@ -58,7 +58,10 @@ function mm_read_password($prompt = '')
 	if(PHP_OS_FAMILY == 'Windows')
 		exec('powershell -Command "$password = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR(($Host.UI.ReadLineAsSecureString()))); if(!$?) { Write-Host $password ; exit 1 }; Write-Host $password"'."\r\n".'IF %errorlevel% NEQ 0 ( exit 1 )', $output, $exitcode);
 	else
+	{
 		exec('password="$(/bin/bash -c "read -s password 2>&1 ; if [[ "$?" != "0" ]] ; then exit 1 ; fi ; echo \$password")" ; if [ "$?" -ne "0" ] ; then echo $password ; exit 1 ; fi ; echo $password', $output, $exitcode);
+		echo PHP_EOL;
+	}
 	if($exitcode != 0)
 	{
 		trigger_error('Password read error: '.implode(PHP_EOL, $output), E_USER_ERROR);
