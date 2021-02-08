@@ -10,7 +10,7 @@ function mm_error_handler($errno, $errstr, $errfile, $errline)
 set_error_handler('mm_error_handler');
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-function mm_add_config($name, $value, $prompt = '', $password = false, $numeric = false)
+function mm_add_config($name, $value, $prompt = '', $password = false, $numeric = false, $comment = '')
 {
 	if($prompt != '')
 	{
@@ -35,9 +35,9 @@ function mm_add_config($name, $value, $prompt = '', $password = false, $numeric 
 		$content .= $lines[$i].PHP_EOL;
 	}
 	if($numeric)
-		$content .= 'define(\''.$name.'\', '.$value.');'.PHP_EOL;
+		$content .= 'define(\''.$name.'\', '.$value.');'.($comment ? ' // '.$comment : '').PHP_EOL;
 	else
-		$content .= 'define(\''.$name.'\', \''.$value.'\');'.PHP_EOL;
+		$content .= 'define(\''.$name.'\', \''.$value.'\');'.($comment ? ' // '.$comment : '').PHP_EOL;
 	$content .= $lines[$i];
 	if(file_put_contents(__DIR__.'/../config.php', $content) === false)
 	{
