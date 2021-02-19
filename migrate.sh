@@ -107,9 +107,9 @@ function create_backup {
 
 				if [[ -d "`dirname "$filename"`/$line" ]]
 				then
-					cp -R "`dirname "$filename"`/$line" "${MM_DIR}/.backup/files/`dirname "$filename"`/`dirname $line`"
+					cp -R --preserve "`dirname "$filename"`/$line" "${MM_DIR}/.backup/files/`dirname "$filename"`/`dirname $line`"
 				else
-					cp -R "`dirname "$filename"`/$line" "${MM_DIR}/.backup/files/`dirname "$filename"`/$line"
+					cp -R --preserve "`dirname "$filename"`/$line" "${MM_DIR}/.backup/files/`dirname "$filename"`/$line"
 				fi
 			fi
 		done < "$filename"
@@ -176,9 +176,9 @@ function restore_backup {
 
 					if [[ -d "${MM_DIR}/.backup/files/`dirname "$filename"`/$line" ]]
 					then
-						cp -R "${MM_DIR}/.backup/files/`dirname "$filename"`/$line" "`dirname "$filename"`/`dirname "$line"`"
+						cp -R --preserve "${MM_DIR}/.backup/files/`dirname "$filename"`/$line" "`dirname "$filename"`/`dirname "$line"`"
 					else
-						cp -R "${MM_DIR}/.backup/files/`dirname "$filename"`/$line" "`dirname "$filename"`/$line"
+						cp -R --preserve "${MM_DIR}/.backup/files/`dirname "$filename"`/$line" "`dirname "$filename"`/$line"
 					fi
 				fi
 			done < "$filename"
