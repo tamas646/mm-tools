@@ -19,12 +19,10 @@ if(!(Test-Path -Path $MM_DIR))
 }
 if(!(Test-Path -Path $MM_DIR/.info))
 {
-    $LAST = ".php"
+    echo ".php" > "$($MM_DIR)/.info"
 }
-else
-{
-    $LAST = (type "$($MM_DIR)/.info")
-}
+
+$LAST = (type "$($MM_DIR)/.info")
 
 if(!(Test-Path -Path "config.php"))
 {
