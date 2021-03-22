@@ -19,10 +19,12 @@ if(!(Test-Path -Path $MM_DIR))
 }
 if(!(Test-Path -Path $MM_DIR/.info))
 {
-    echo ".php" > "$($MM_DIR)/.info"
+    $LAST = ".php"
 }
-
-$LAST = (type "$($MM_DIR)/.info")
+else
+{
+    $LAST = (type "$($MM_DIR)/.info")
+}
 
 if(!(Test-Path -Path "config.php"))
 {
@@ -250,7 +252,11 @@ for($i = 0; $i -lt $PHPFILES.Length; ++$i)
             exit $exitcode
         }
         $LAST = $name
-        Set-ItemProperty "$($MM_DIR)/.info" -name Attributes -Value "Normal"
+
+        if(!(Test-Path -Path $MM_DIR/.info))
+        {
+            Set-ItemProperty "$($MM_DIR)/.info" -name Attributes -Value "Normal"
+        }
         echo $LAST > "$($MM_DIR)/.info"
         Set-ItemProperty "$($MM_DIR)/.info" -name Attributes -Value "Hidden"
 
