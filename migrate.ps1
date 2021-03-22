@@ -252,7 +252,9 @@ for($i = 0; $i -lt $PHPFILES.Length; ++$i)
             exit $exitcode
         }
         $LAST = $name
+        Set-ItemProperty '$($MM_DIR)/.info' -name Attributes -Value "Normal"
         echo $LAST > "$($MM_DIR)/.info"
+        Set-ItemProperty '$($MM_DIR)/.info' -name Attributes -Value "Hidden"
 
         delete_backup
     }
