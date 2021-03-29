@@ -39,3 +39,38 @@ If you want to create and use multiple branches in your project, make sure you f
 You can test the result of your migration before permanently applying it.
 
 For this you have to run the migrate script in testing mode: `migrate.sh -t` or `migrate.bat /t`
+
+## Custom backup scripts (linux only)
+
+In linux you have the ability to setup your custom backup functions for the migration manager.
+
+To do this create an executable file in this folder with the name of `.custom-backup`.
+
+The migration manager will run this script with the following arguments:
+
+1. the method (create\|restore\|delete)
+
+2. the database pattern ($MM_DBPTN variable)
+
+Example content of `.custom-backup`:
+
+```sh
+#!/bin/bash
+
+set -e
+
+case $1 in
+	create)
+		# do some stuff
+		;;
+	restore)
+		# do some stuff
+		;;
+	delete)
+		# do some stuff
+		;;
+	*)
+		exit 2
+		;;
+esac
+```

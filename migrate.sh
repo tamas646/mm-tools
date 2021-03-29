@@ -76,6 +76,12 @@ do
 done < <(ls "$MM_DIR")
 
 function create_backup {
+	if [[ -x "${MM_DIR}/.custom-backup" ]]
+	then
+		"${MM_DIR}/.custom-backup" create "$MM_DBPTN"
+		return
+	fi
+
 	local databases=`php -r "include 'config.php';\\\$s='';\\\$q=(new mysqli(MYSQL_HOST,MYSQL_USER,MYSQL_PASSWORD))->query('SHOW DATABASES');while(\\\$d=\\\$q->fetch_assoc())if(preg_match('/${MM_DBPTN}/',\\\$d['Database']))\\\$s.=\\\$d['Database'].' ';echo trim(\\\$s);"`
 	if [[ -d "${MM_DIR}/.backup/" ]]
 	then
@@ -143,6 +149,12 @@ function create_backup {
 }
 
 function restore_backup {
+	if [[ -x "${MM_DIR}/.custom-backup" ]]
+	then
+		"${MM_DIR}/.custom-backup" restore "$MM_DBPTN"
+		return
+	fi
+
 	echo -e "\e[90mRestoring files...\e[34m"
 	if [[ -d "${MM_DIR}/.backup/files/" ]]
 	then
@@ -211,6 +223,12 @@ function restore_backup {
 }
 
 function delete_backup {
+	if [[ -x "${MM_DIR}/.custom-backup" ]]
+	then
+		"${MM_DIR}/.custom-backup" delete "$MM_DBPTN"
+		return
+	fi
+
 	if [[ -d "${MM_DIR}/.backup/" ]]
 	then
 		rm -R "${MM_DIR}/.backup/"
